@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/TodoApi.csproj": {}
+    "/Users/vuzgun/Documents/GitHub/TODO-app/TodoApi.csproj": {}
   },
   "projects": {
-    "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/TodoApi.csproj": {
+    "/Users/vuzgun/Documents/GitHub/TODO-app/TodoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/TodoApi.csproj",
+        "projectUniqueName": "/Users/vuzgun/Documents/GitHub/TODO-app/TodoApi.csproj",
         "projectName": "TodoApi",
-        "projectPath": "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/TodoApi.csproj",
+        "projectPath": "/Users/vuzgun/Documents/GitHub/TODO-app/TodoApi.csproj",
         "packagesPath": "/Users/vuzgun/.nuget/packages/",
-        "outputPath": "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/obj/",
+        "outputPath": "/Users/vuzgun/Documents/GitHub/TODO-app/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/vuzgun/.nuget/NuGet/NuGet.Config"

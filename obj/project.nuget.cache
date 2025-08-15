@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3Lu1xMHlDPI=",
+  "dgSpecHash": "NHsPq1IVWJs=",
   "success": true,
-  "projectFilePath": "/Users/vuzgun/dotnet_learning/TODO/TodoMVC/TodoApi.csproj",
+  "projectFilePath": "/Users/vuzgun/Documents/GitHub/TODO-app/TodoApi.csproj",
   "expectedPackageFiles": [
     "/Users/vuzgun/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/vuzgun/.nuget/packages/microsoft.aspnetcore.mvc.razor.extensions/6.0.0/microsoft.aspnetcore.mvc.razor.extensions.6.0.0.nupkg.sha512",

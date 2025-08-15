@@ -6,7 +6,7 @@ using TodoApi.Services;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/todo")]
     [ApiController]
     [Authorize] // Require authentication for all API endpoints
     public class TodoApiController : ControllerBase

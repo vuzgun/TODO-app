@@ -14,12 +14,21 @@ class TodoManager {
     setupEventListeners() {
         // Add event listeners for todo actions
         document.addEventListener('click', (e) => {
-            if (e.target.matches('.btn-complete')) {
-                this.completeTodo(e.target.dataset.id);
-            } else if (e.target.matches('.btn-delete')) {
-                this.deleteTodo(e.target.dataset.id);
-            } else if (e.target.matches('.btn-edit')) {
-                this.editTodo(e.target.dataset.id);
+            const completeBtn = e.target.closest('.btn-complete');
+            if (completeBtn) {
+                this.completeTodo(completeBtn.dataset.id);
+                return;
+            }
+
+            const deleteBtn = e.target.closest('.btn-delete');
+            if (deleteBtn) {
+                this.deleteTodo(deleteBtn.dataset.id);
+                return;
+            }
+
+            const editBtn = e.target.closest('.btn-edit');
+            if (editBtn) {
+                this.editTodo(editBtn.dataset.id);
             }
         });
 
@@ -42,6 +51,7 @@ class TodoManager {
 
         try {
             const response = await fetch('/api/todo', {
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -86,7 +96,11 @@ class TodoManager {
         }
 
         const todoCards = todos.map(todo => this.createTodoCard(todo)).join('');
-        todoContainer.innerHTML = todoCards;
+        todoContainer.innerHTML = `
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                ${todoCards}
+            </div>
+        `;
     }
 
     createTodoCard(todo) {
@@ -192,6 +206,7 @@ class TodoManager {
         try {
             const response = await fetch(`/api/todo/${todoId}/complete`, {
                 method: 'PATCH',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -232,6 +247,7 @@ class TodoManager {
         try {
             const response = await fetch(`/api/todo/${todoId}`, {
                 method: 'DELETE',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json'
                 }

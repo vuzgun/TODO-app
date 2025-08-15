@@ -103,20 +103,18 @@
                     <div>
                         @if (!Model.IsCompleted)
                         {
-                            <form asp-action="Complete" asp-route-id="@Model.Id" method="post" style="display: inline;">
+                            <form id="complete-form" asp-action="Complete" asp-route-id="@Model.Id" method="post" style="display: inline;">
                                 @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-success" 
-                                        onclick="return confirm('Bu görevi tamamlandı olarak işaretlemek istediğinizden emin misiniz?')">
+                                <button type="button" class="btn btn-success" id="btn-complete-details">
                                     <i class="fas fa-check me-1"></i>Tamamlandı Olarak İşaretle
                                 </button>
                             </form>
                         }
                     </div>
                     
-                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display: inline;">
+                    <form id="delete-form" asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display: inline;">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger" 
-                                onclick="return confirm('Bu görevi silmek istediğinizden emin misiniz?')">
+                        <button type="button" class="btn btn-danger" id="btn-delete-details">
                             <i class="fas fa-trash me-1"></i>Görevi Sil
                         </button>
                     </form>
@@ -125,3 +123,49 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteBtn = document.getElementById('btn-delete-details');
+            const deleteForm = document.getElementById('delete-form');
+            if (deleteBtn && deleteForm) {
+                deleteBtn.addEventListener('click', async function () {
+                    const result = await Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: 'Bu görevi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Evet, Sil',
+                        cancelButtonText: 'İptal'
+                    });
+                    if (result.isConfirmed) {
+                        deleteForm.submit();
+                    }
+                });
+            }
+
+            const completeBtn = document.getElementById('btn-complete-details');
+            const completeForm = document.getElementById('complete-form');
+            if (completeBtn && completeForm) {
+                completeBtn.addEventListener('click', async function () {
+                    const result = await Swal.fire({
+                        title: 'Emin misiniz?',
+                        text: 'Bu görevi tamamlandı olarak işaretlemek istediğinizden emin misiniz?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#28a745',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Evet, Tamamla',
+                        cancelButtonText: 'İptal'
+                    });
+                    if (result.isConfirmed) {
+                        completeForm.submit();
+                    }
+                });
+            }
+        });
+    </script>
+}

@@ -24,7 +24,8 @@ namespace TodoApi.DTOs
         [StringLength(1000)]
         public string? Description { get; set; }
         
-        public bool? IsCompleted { get; set; }
+        // MVC checkbox requires non-nullable bool
+        public bool IsCompleted { get; set; }
         
         [Range(1, 3)]
         public int? Priority { get; set; }

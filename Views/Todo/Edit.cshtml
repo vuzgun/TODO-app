@@ -10,7 +10,7 @@
                 <h3><i class="fas fa-edit me-2"></i>Görev Düzenle</h3>
             </div>
             <div class="card-body">
-                <form asp-action="Edit" method="post">
+                <form asp-action="Edit" asp-route-id="@Context.Request.RouteValues["id"]" method="post">
                     @Html.AntiForgeryToken()
                     
                     <div class="mb-3">
@@ -38,7 +38,7 @@
                     
                     <div class="mb-3">
                         <div class="form-check">
-                            <input asp-for="IsCompleted" class="form-check-input" type="checkbox" />
+                            <input asp-for="IsCompleted" class="form-check-input" />
                             <label asp-for="IsCompleted" class="form-check-label">
                                 Görev tamamlandı
                             </label>

@@ -66,7 +66,7 @@ namespace TodoApi.Services
                 Title = updateTodoDto.Title ?? existingTodo.Title,
                 Description = updateTodoDto.Description ?? existingTodo.Description,
                 Priority = updateTodoDto.Priority ?? existingTodo.Priority,
-                IsCompleted = updateTodoDto.IsCompleted ?? existingTodo.IsCompleted,
+                IsCompleted = updateTodoDto.IsCompleted,
                 UserId = existingTodo.UserId,
                 IsActive = existingTodo.IsActive
             };
