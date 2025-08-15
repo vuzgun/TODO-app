@@ -1,0 +1,141 @@
+@model IEnumerable<TodoResponseDto>
+@{
+    ViewData["Title"] = "Görevlerim";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-tasks me-2"></i>Görevlerim</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus me-1"></i>Yeni Görev
+    </a>
+</div>
+
+<!-- Container for dynamic todo rendering -->
+<div id="todo-container">
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-clipboard-list fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">Henüz görev bulunmuyor</h4>
+            <p class="text-muted">İlk görevinizi oluşturmak için "Yeni Görev" butonuna tıklayın.</p>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>İlk Görevi Oluştur
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var todo in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 @(todo.IsCompleted ? "border-success" : "")">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="badge bg-@(todo.Priority switch { 1 => "success", 2 => "warning", 3 => "danger", _ => "secondary" })">
+                                Öncelik @todo.Priority
+                            </span>
+                            @if (todo.IsCompleted)
+                            {
+                                <span class="badge bg-success">
+                                    <i class="fas fa-check me-1"></i>Tamamlandı
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    <i class="fas fa-clock me-1"></i>Bekliyor
+                                </span>
+                            }
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title @(todo.IsCompleted ? "text-decoration-line-through text-muted" : "")">
+                                @todo.Title
+                            </h5>
+                            
+                            @if (!string.IsNullOrEmpty(todo.Description))
+                            {
+                                <p class="card-text @(todo.IsCompleted ? "text-muted" : "")">
+                                    @(todo.Description.Length > 100 ? todo.Description.Substring(0, 100) + "..." : todo.Description)
+                                </p>
+                            }
+                            
+                            <div class="small text-muted mb-3">
+                                <div><i class="fas fa-calendar me-1"></i>Oluşturulma: @todo.CreatedAt.ToString("dd.MM.yyyy HH:mm")</div>
+                                @if (todo.CompletedAt.HasValue)
+                                {
+                                    <div><i class="fas fa-check-circle me-1"></i>Tamamlanma: @todo.CompletedAt.Value.ToString("dd.MM.yyyy HH:mm")</div>
+                                }
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <div class="btn-group w-100" role="group">
+                                <a asp-action="Details" asp-route-id="@todo.Id" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                
+                                @if (!todo.IsCompleted)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@todo.Id" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    
+                                    <button type="button" class="btn btn-outline-success btn-sm btn-complete" data-id="@todo.Id">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                }
+                                
+                                <button type="button" class="btn btn-outline-danger btn-sm btn-delete" data-id="@todo.Id">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Show TempData messages as SweetAlert2 toasts
+        @if (TempData["Success"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'success',
+                title: '@TempData["Success"]',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+            </text>
+        }
+        
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'error',
+                title: '@TempData["Error"]',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+            </text>
+        }
+
+        // Initialize TodoManager when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof TodoManager !== 'undefined') {
+                window.todoManager = new TodoManager();
+            }
+        });
+    </script>
+}
